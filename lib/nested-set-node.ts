@@ -19,6 +19,23 @@ export class NestedSetNode implements NestedSetProperties {
   public children: NestedSetNode[];
   public parent: NestedSetNode | null;
 
+  /**
+   * Constructor
+   * @param {string} title
+   * @param {string} type
+   * @param {string | null} uuid;
+   * @param {string | null} org_uuid;
+   * @param {string | null} created_by;
+   * @param {string | null} updated_by;
+   * @param {string | null} created_at;
+   * @param {string | null} updated_at;
+   * @param {string | null} deleted_by;
+   * @param {string | null} deleted_at;
+   * @param {number} left
+   * @param {number} right
+   * @param {number} depth
+   * @param {NestedSetNode} parent
+   */
   constructor(title: string, type: string, uuid: string | null = null, org_uuid: string | null = null, created_by: string | null = null,
     updated_by: string | null = null, created_at: string | null = null, updated_at: string | null = null, deleted_by: string | null = null,
     deleted_at: string | null = null, left: number = 0, right: number = 1, depth: number = 0, parent?: NestedSetNode) {
@@ -35,14 +52,26 @@ export class NestedSetNode implements NestedSetProperties {
     }
   }
 
+  /**
+   * Is Leaf
+   * @return {boolean}
+   */
   public isLeaf(): boolean {
     return (this.node_depth > 0 && this.children.length === 0);
   }
 
+  /**
+   * Is Root
+   * @return {boolean}
+   */
   public isRoot(): boolean {
     return !(this.parent);
   }
 
+  /**
+   * Previous Sibling
+   * @return {NestedSetNode | null}
+   */
   public prevSibling(): NestedSetNode | null {
     if (this.parent) {
       let idx = this.parent.children.indexOf(this);
@@ -53,6 +82,10 @@ export class NestedSetNode implements NestedSetProperties {
     }
   }
 
+  /**
+   * Next Sibling
+   * @return {NestedSetNode | null}
+   */
   public nextSibling(): NestedSetNode | null {
     if (this.parent) {
       let idx = this.parent.children.indexOf(this);
@@ -63,6 +96,10 @@ export class NestedSetNode implements NestedSetProperties {
     }
   }
 
+  /**
+   * Count Next Siblings
+   * @return {number}
+   */
   public countNextSiblings(): number {
     if (this.parent) {
       return this.parent.children.length - (this.parent.children.indexOf(this) + 1);
@@ -71,6 +108,10 @@ export class NestedSetNode implements NestedSetProperties {
     }
   }
 
+  /**
+   * Get Size
+   * @return {number}
+   */
   public getSize(): number {
     if (this.isLeaf()) {
       return 2;
@@ -84,6 +125,11 @@ export class NestedSetNode implements NestedSetProperties {
     }
   }
 
+  /**
+   * Append
+   * @param {NestedSetNode} node
+   * @return {void}
+   */
   public append(node: NestedSetNode) {
     node.parent = this;
     node.node_depth = this.node_depth + 1;
@@ -91,6 +137,11 @@ export class NestedSetNode implements NestedSetProperties {
     this.rebuild();
   }
 
+  /**
+   * Prepend
+   * @param {NestedSetNode} node
+   * @return {void}
+   */
   public prepend(node: NestedSetNode) {
     node.parent = this;
     node.node_depth = this.node_depth + 1;
@@ -98,6 +149,11 @@ export class NestedSetNode implements NestedSetProperties {
     this.rebuild();
   }
 
+  /**
+   * Rebuild
+   * @param {NestedSetNode} list
+   * @return {NestedSetNode[]}
+   */
   public rebuild(list: NestedSetNode[] = []): NestedSetNode[] {
     if (list.indexOf(this) === -1) {
 
@@ -147,6 +203,10 @@ export class NestedSetNode implements NestedSetProperties {
     }
   }
 
+  /**
+   * To Nested Set Properties
+   * @return {NestedSetProperties}
+   */
   public toNestedSetProperties(): NestedSetProperties {
     return {
       uuid:this.uuid,
@@ -166,6 +226,10 @@ export class NestedSetNode implements NestedSetProperties {
     };
   }
 
+  /**
+   * Flat
+   * @return {NestedSetProperties[]}
+   */
   public flat(): NestedSetProperties[] {
     return (this.rebuild()).map((node) => node.toNestedSetProperties());
   }
@@ -199,6 +263,10 @@ export class NestedSetNode implements NestedSetProperties {
     return nestedObjects;
   }
 
+  /**
+   * Remove Child
+   * @param {NestedSetNode} child
+   */
   public removeChild(child: NestedSetNode) {
     let idx = this.children.indexOf(child);
 
@@ -209,6 +277,9 @@ export class NestedSetNode implements NestedSetProperties {
     }
   }
 
+  /**
+   * Validate
+   */
   public validate(): void {
     if (this.node_depth !== 0 && this.parent === null) {
       throw new Error('Required parent when depth is not zero.');
