@@ -19,7 +19,9 @@ export class NestedSetNode implements NestedSetProperties {
   public children: NestedSetNode[];
   public parent: NestedSetNode | null;
 
-  constructor(title: string = '', left: number = 0, right: number = 1, depth: number = 0, parent?: NestedSetNode) {
+  constructor(title: string, type: string, uuid: string | null = null, org_uuid: string | null = null, created_by: string | null = null,
+    updated_by: string | null = null, created_at: string | null = null, updated_at: string | null = null, deleted_by: string | null = null,
+    deleted_at: string | null = null, left: number = 0, right: number = 1, depth: number = 0, parent?: NestedSetNode) {
     this.title = title;
     this.node_depth = depth;
     this.node_left = left;
@@ -166,6 +168,35 @@ export class NestedSetNode implements NestedSetProperties {
 
   public flat(): NestedSetProperties[] {
     return (this.rebuild()).map((node) => node.toNestedSetProperties());
+  }
+
+  /**
+   * Array to Nested
+   * @param {NestedSetProperties[]} documents
+   * @return {NestedSetNode[]}
+  */
+  public static async toNested(documents:NestedSetProperties[]): Promise<NestedSetNode[]> {
+    const nestedObjects:NestedSetNode[] = [];
+    documents.map((doc) => {
+      // Create node
+      const docArrayKey = doc.tag;
+      nestedObjects[docArrayKey] = new NestedSetNode(doc.title, doc.type, doc.uuid, doc.org_uuid, doc.created_by,
+          doc.updated_by, doc.created_at, doc.updated_at, doc.deleted_by, doc.deleted_at);
+      // Check parent
+      const parent = documents.find(( {node_left, node_right, node_depth} ) => {
+        return doc.node_left > node_left && doc.node_right < node_right && node_depth == doc.node_depth-1;
+      });
+      // Append
+      let parentArrayKey = 'root';
+      if (parent) {
+        parentArrayKey = parent.tag;
+      }
+      if (docArrayKey != 'root') {
+        nestedObjects[parentArrayKey].append(nestedObjects[docArrayKey]);
+      }
+    });
+
+    return nestedObjects;
   }
 
   public removeChild(child: NestedSetNode) {
