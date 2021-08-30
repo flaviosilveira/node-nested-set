@@ -1,71 +1,30 @@
 {
-  "name": "@intocode-io/ts-nested-set",
-  "version": "1.0.11",
-  "description": "Nested Set model implementation for Node.js written in TypeScript",
-  "main": "dist/index.js",
+  "name": "@flavioaugustosilveira/nested-set",
+  "version": "1.0.0",
+  "description": "Nested Set for Node.js written in TypeScript - Forked from ts-nested-set (archived)",
+  "main": "index.ts",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
   "scripts": {
-    "build": "tsc",
-    "clean": "del-cli dist",
-    "coverage": "nyc --reporter=html --reporter=text-summary mocha --exit",
-    "lint": "tslint -p . -p test",
-    "lint:fix": "tslint -p . -p test --fix",
-    "prebuild": "npm run clean && npm run lint",
-    "pretest": "npm run build",
-    "release": "npm run build && npm publish --access public",
-    "test": "nyc --reporter=lcov --reporter=text-summary mocha --exit",
-    "test:watch": "mocha --watch-extensions ts --watch"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint",
-      "pre-push": "npm run build && npm run coverage"
-    }
-  },
-  "nyc": {
-    "per-file": true,
-    "extension": [
-      ".ts",
-      ".tsx"
-    ],
-    "include": [
-      "lib/**/*.ts"
-    ],
-    "exclude": [
-      "**/*.d.ts",
-      "lib/nested-set-properties.ts"
-    ],
-    "require": [
-      "ts-node/register",
-      "source-map-support/register"
-    ],
-    "cache": true,
-    "all": true
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/intocode-io/node-nested-set.git"
+    "url": "git+https://github.com/flaviosilveira/node-nested-set.git"
   },
   "keywords": [
-    "Nested Set"
+    "nested",
+    "set",
+    "node",
+    "tree",
+    "architecture"
   ],
-  "author": "Satana Charuwichitratana <micksatana@live.com> (http://www.micksatana.com)",
-  "license": "MIT",
-  "devDependencies": {
-    "@types/chai": "^4.2.2",
-    "@types/mocha": "^5.2.7",
-    "@types/sinon": "^7.0.13",
-    "chai": "^4.2.0",
-    "del-cli": "^3.0.0",
-    "husky": "^3.0.5",
-    "mocha": "^6.2.0",
-    "nyc": "^14.1.1",
-    "sinon": "^7.4.2",
-    "source-map-support": "^0.5.13",
-    "ts-node": "^8.3.0",
-    "tslint": "^5.20.0",
-    "typescript": "^3.6.3"
+  "author": "Flavio Silveira - (Forked From @micksatana)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/flaviosilveira/node-nested-set/issues"
   },
-  "dependencies": {
-    "@types/node": "^12.7.5"
-  }
+  "homepage": "https://github.com/flaviosilveira/node-nested-set#readme"
 }

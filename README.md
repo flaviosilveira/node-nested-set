@@ -25,6 +25,7 @@ npm install ts-nested-set
  * `getSize()` get current node size. 2 if there is no children
  * `children` contains all children nodes. Empty array if the node has no child
  * `parent` refers to the parent node. `null` if the node is Root 
+ * `toNested` get an array, and build a NestSet object
 
 ### Examples
 
