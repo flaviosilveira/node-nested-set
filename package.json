@@ -1,5 +1,5 @@
 {
-  "name": "@flavioaugustosilveira/nested-set",
+  "name": "nested-set-ts",
   "version": "1.0.0",
   "description": "Nested Set for Node.js written in TypeScript - Forked from ts-nested-set (archived)",
   "main": "index.ts",

@@ -9,7 +9,7 @@
 
 ## Installation
 ```
-npm install ts-nested-set
+npm install nested-set-ts
 ```
 
 ## Features
@@ -32,7 +32,7 @@ npm install ts-nested-set
 #### Use NestedSetNode directly
 
 ```
-import {NestedSetNode} from 'ts-nested-set';
+import {NestedSetNode} from 'nested-set-ts';
 
 let root = new NestedSetNode('Root'),
     nodeA = new NestedSetNode('Node A'),
